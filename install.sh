@@ -192,17 +192,16 @@ ipfs repo fsck
 ipfs daemon --enable-pubsub-experiment &> ipfs.log &
 ipfs pin ls | cut -f1 -d" " | xargs -n 1 ipfs pin rm
 cat ipfs.log
-set +x
-echo "Installing Crontab"
-cd $TMP_DIR
-crontab -l > mycron
-echo "@reboot $HOME/bin/tipfs-watcher-cycle" >> mycron
-crontab mycron
+#set +x
+#echo "Installing Crontab"
+#cd $TMP_DIR
+#crontab -l > mycron
+#echo "@reboot $HOME/bin/tipfs-watcher-cycle" >> mycron
+#crontab mycron
 
-echo "Starting TIPFS Watchers"
-cd $HOME
-cd bin
-./tipfs-watcher-cycle
+#echo "Starting TIPFS Watchers"
+#cd $HOME
+#cd bin
+#./tipfs-watcher-cycle
 
 rm -rf $TMP_DIR
-

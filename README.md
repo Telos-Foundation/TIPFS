@@ -1,1 +1,57 @@
-Telos is released under the open source MIT license and is offered “AS IS” without warranty of any kind, express or implied. Any security provided by the Telos software depends in part on how it is used, configured, and deployed. Telos is built upon many third-party libraries such as Binaryen (Apache License) and WAVM (BSD 3-clause) which are also provided “AS IS” without warranty of any kind. Without limiting the generality of the foregoing, Telos Foundation makes no representation or guarantee that Telos or any third-party libraries will perform as intended or will be free of errors, bugs or faulty code. Both may fail in large or small ways that could completely or partially limit functionality or compromise computer systems. If you use or implement Telos, you do so at your own risk. In no event will Telos Foundation be liable to any party for any damages whatsoever, even if it had been advised of the possibility of damage.
+# TIPFS -- The Telos IPFS Wrapper
+
+The IPFS storage engine wrapper for the Telos blockchain.
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+In order to use the TIPFS stack you need a few things:
+ - Public IPv4 address mapped directly to a network interface ( No NAT. No Exceptions! )
+ - Linux instance running Ubuntu 18.04
+ - Service account without sudo privileges
+
+### Installing
+
+Create service account
+
+```
+groupadd ipfs && useradd -d /home/ipfs -g ipfs -m -s /bin/bash ipfs
+```
+
+Enter service account
+
+```
+sudo su -l ipfs
+```
+
+Bootstrap node
+
+```
+curl "https://raw.githubusercontent.com/Telos-Foundation/tipfs/master/install.sh" | bash
+```
+
+When this is finished, you should have a running IPFS node connected to our swarm.  You can verify by issuing
+```
+ipfs swarm peers
+```
+
+## Options
+
+## Deployment
+
+Todo
+
+## Authors
+
+* **Stephanie Sunshine** - [StephanieSunshine](https://github.com/StephanieSunshine)
+* **John Hauge** - [John Hauge](https://github.com/jhexperiment)
+* **Lee Hundley** - [John Hauge](https://github.com/initpnw)
+
+See also the list of [contributors](https://github.com/Telos-Foundation/tipfs/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
