@@ -47,8 +47,8 @@ Todo
 ## Authors
 
 * **Stephanie Sunshine** - [StephanieSunshine](https://github.com/StephanieSunshine)
-* **John Hauge** - [John Hauge](https://github.com/jhexperiment)
-* **Lee Hundley** - [John Hauge](https://github.com/initpnw)
+* **John Hauge** - [JohnHauge](https://github.com/jhexperiment)
+* **Lee Hundley** - [LeeHundley](https://github.com/initpnw)
 
 See also the list of [contributors](https://github.com/Telos-Foundation/tipfs/contributors) who participated in this project.
 
