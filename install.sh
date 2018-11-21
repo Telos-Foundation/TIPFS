@@ -46,6 +46,11 @@ TMP_PATH=/tmp
 # to hold the current variables needed in order to start a node for a specific network
 # IPFS Daemon port
 IPFS_PORT=4001
+# IPFS API port
+IPFS_API_PORT=5001
+# IPFS Gateway port
+IPFS_GATEWAY_PORT=8080
+
 # Network boot DNS root
 DNS_ENDPOINT=ipfs.telosfoundation.io
 # Network shortname [ main | test | stage | jungle | etc ]
@@ -61,7 +66,7 @@ IPFSV_ENDPOINT=ipfsv
 
 # Needed for OSX to play right.
 
-OPTS=`/usr/bin/env getopt -o '' --long prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint: -n 'install' -- "$@"`
+OPTS=`/usr/bin/env getopt -o '' --long prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint: -n 'install' -- "$@"`
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
 eval set -- "$OPTS"
@@ -75,6 +80,8 @@ while true; do
     --tmp-prefix ) TMP_PATH=$2; shift; shift ;;
 
     --ipfs-port ) IPFS_PORT=$2; shift; shift ;;
+    --ipfs-api-port ) IPFS_API_PORT=$2; shift; shift ;;
+    --ipfs-gateway-port ) IPFS_GATEWAY_PORT=$2; shift; shift ;;
     --dns-endpoint ) DNS_ENDPOINT=$2; shift; shift ;;
     --network ) NETWORK=$2; shift; shift ;;
     --bootstrap-endpoint ) BOOTSTRAP_ENDPOINT=$2; shift; shift ;;
@@ -174,6 +181,12 @@ ipfs bootstrap add $BOOTSTRAP
 cd ~/.ipfs
 printf "$SWARMKEY" > swarm.key
 cd ~
+
+ipfs config ipfs config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$IPFS_PORT\"]"
+ipfs config ipfs config --json Addresses.API "/ip4/127.0.0.1/tcp/$IPFS_API_PORT"
+ipfs config ipfs config --json Addresses.Gateway "/ip4/0.0.0.0/tcp/$IPFS_GATEWAY_PORT"
+
+pkill -9 ipfs
 ipfs daemon --enable-pubsub-experiment &> ipfs.log &
 ipfs pin ls | cut -f1 -d" " | xargs -n 1 ipfs pin rm
 cat ipfs.log
