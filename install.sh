@@ -36,7 +36,7 @@ DumpVars() {
 }
 
 # Default install paths
-DEST_PATH=~
+DEST_PATH=$HOME
 BIN_PATH=$DEST_PATH/bin
 LOG_PATH=$DEST_PATH/log
 GO_PATH=$DEST_PATH/go
@@ -144,7 +144,7 @@ mkdir $GO_PATH
 cd $TMP_DIR
 mv $GOLANGV $GO_PATH
 cd $GO_PATH
-tar zxvf $GOLANGV
+tar zxf $GOLANGV
 cd go
 mv * ..
 
@@ -152,7 +152,7 @@ echo
 echo "Installing go-ipfs in $BIN_PATH from $TMP_DIR"
 mkdir $BIN_PATH
 cd $TMP_DIR
-tar zxvf go*
+tar zxf go*
 cd go-ipfs
 mv ipfs $BIN_PATH
 cd ..
@@ -161,7 +161,7 @@ rm -rf go-ipfs*
 echo
 echo "Installing tipfs in $BIN_PATH from $TMP_DIR"
 cd $TMP_DIR
-tar zxvf master.tar.gz
+tar zxf master.tar.gz
 cd tipfs-master/bin
 mv * $BIN_PATH
 
@@ -169,22 +169,22 @@ echo
 echo "Creating log path $LOG_PATH"
 mkdir -p $LOG_PATH
 
-echo "export PATH=\$PATH:$GO_PATH/bin; export GOPATH=$GO_PATH" >> ~/.bash_aliases
+echo "export PATH=\$PATH:$GO_PATH/bin; export GOPATH=$GO_PATH" >> $HOME/.bash_aliases
 
-export PATH=$PATH:$GO_PATH/bin:~/bin
-cd ~
+export PATH=$PATH:$GO_PATH/bin:$HOME/bin
+cd $HOME
 
 echo "Initializing IPFS"
 ipfs init
 ipfs bootstrap rm --all
 ipfs bootstrap add $BOOTSTRAP
-cd ~/.ipfs
+cd $HOME/.ipfs
 printf "$SWARMKEY" > swarm.key
-cd ~
+cd $HOME
 set -x
 ipfs config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$IPFS_PORT\"]"
-ipfs config --json Addresses.API \"/ip4/127.0.0.1/tcp/$IPFS_API_PORT\"
-ipfs config --json Addresses.Gateway \"/ip4/0.0.0.0/tcp/$IPFS_GATEWAY_PORT\"
+ipfs config --json Addresses.API "\"/ip4/127.0.0.1/tcp/$IPFS_API_PORT\""
+ipfs config --json Addresses.Gateway "\"/ip4/0.0.0.0/tcp/$IPFS_GATEWAY_PORT\""
 
 pkill -9 ipfs
 
@@ -196,11 +196,11 @@ set +x
 echo "Installing Crontab"
 cd $TMP_DIR
 crontab -l > mycron
-echo "@reboot ~/bin/tipfs-watcher-cycle" >> mycron
+echo "@reboot $HOME/bin/tipfs-watcher-cycle" >> mycron
 crontab mycron
 
 echo "Starting TIPFS Watchers"
-cd ~
+cd $HOME
 cd bin
 ./tipfs-watcher-cycle
 
