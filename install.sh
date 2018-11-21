@@ -101,7 +101,7 @@ printf "${NC}\nDownloading...\n"
 
 GO_URL="https://dl.google.com/go/$GOLANGV"
 IPFS_URL="https://dist.ipfs.io/go-ipfs/$IPFSV"
-TIPFS_URL="https://github.com/Telos-Foundation/TIPFS/archive/master.tar.gz"
+TIPFS_URL="https://github.com/Telos-Foundation/tipfs/archive/master.tar.gz"
 
 GO_FILE=`basename $GO_URL`
 IPFS_FILE=`basename $IPFS_URL`
