@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-sudo rm -rf /opt/tipfs
+echo rm -rf ~/.ipfs ~/go ~/bin ~/log
+echo vim ~/.bash_aliases
+echo crontab -e

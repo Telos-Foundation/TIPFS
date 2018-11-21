@@ -178,14 +178,16 @@ ipfs daemon --enable-pubsub-experiment &> ipfs.log &
 ipfs pin ls | cut -f1 -d" " | xargs -n 1 ipfs pin rm
 cat ipfs.log
 
-echo "Starting TIPFS Watchers"
-cd ~
-cd bin
-./tipfs-watcher-cycle
+echo "Installing Crontab"
 cd $TMP_DIR
 crontab -l > mycron
 echo "@reboot ~/bin/tipfs-watcher-cycle" >> mycron
 crontab mycron
+
+echo "Starting TIPFS Watchers"
+cd ~
+cd bin
+./tipfs-watcher-cycle
 
 rm -rf $TMP_DIR
 
