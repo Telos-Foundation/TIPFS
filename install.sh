@@ -155,7 +155,7 @@ echo
 echo "Installing tipfs in $BIN_PATH from $TMP_DIR"
 cd $TMP_DIR
 tar zxvf master.tar.gz
-cd TIPFS-master/bin
+cd tipfs-master/bin
 mv * $BIN_PATH
 
 echo
