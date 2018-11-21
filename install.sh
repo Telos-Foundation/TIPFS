@@ -182,9 +182,9 @@ cd ~/.ipfs
 printf "$SWARMKEY" > swarm.key
 cd ~
 
-ipfs config ipfs config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$IPFS_PORT\"]"
-ipfs config ipfs config --json Addresses.API "/ip4/127.0.0.1/tcp/$IPFS_API_PORT"
-ipfs config ipfs config --json Addresses.Gateway "/ip4/0.0.0.0/tcp/$IPFS_GATEWAY_PORT"
+ipfs config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$IPFS_PORT\"]"
+ipfs config --json Addresses.API "/ip4/127.0.0.1/tcp/$IPFS_API_PORT"
+ipfs config --json Addresses.Gateway "/ip4/0.0.0.0/tcp/$IPFS_GATEWAY_PORT"
 
 pkill -9 ipfs
 ipfs daemon --enable-pubsub-experiment &> ipfs.log &
