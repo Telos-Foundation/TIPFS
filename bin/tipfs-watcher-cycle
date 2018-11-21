@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PREFIX=/opt/tipfs
+PREFIX=~
 
 pkill -f 'ipfs pubsub'
 
