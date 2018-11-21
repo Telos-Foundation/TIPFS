@@ -76,10 +76,53 @@ Set the port that IPFS daemon uses to communicate with the swarm.  By default, t
 
 Example: `--ipfs-port 4001`
 
+### `--ipfs-api-port`
 
+Set the port that IPFS daemon uses as an API endpoint.  By default, this is 5001 on localhost.
 
+Example: `--ipfs-api-port 5001`
 
-Todo
+### `--ipfs-gateway-port`
+
+Set the port that IPFS daemon uses as a webgui endpoint.  By default, this is 8080 on localhost.
+
+Example: `--ipfs-gateway-port 8080`
+
+### `--dns-endpoint`
+
+Set the DNS endpoint used to kickstart TIPFS. By default this is `ipfs.telosfoundation.io`.
+
+Example: `--ipfs-gateway-port ipfs.telosfoundation.io`
+
+### `--network`
+
+Set the the network that TIPFS is going to kickstart.  By default, this is `test` as in `testnet`.
+
+Example: `--network test`
+
+### `--bootstrap-endpoint`
+
+Set the hostname endpoint for the bootstrap kickstart information.  By default, this is `boot` which expands to `boot.test.ipfs.telosfoundation.io`
+
+Example: `--bootstrap-endpoint boot`
+
+### `--swarmkey-endpoint`
+
+Set the hostname endpoint for the swarm key kickstart information.  By default, this is `key` which expands to `key.test.ipfs.telosfoundation.io`
+
+Example: `--swarmkey-endpoint key`
+
+### `--ipfsv-endpoint`
+
+Set the hostname endpoint for the ipfs version kickstart information.  By default, this is `ipfsv` which expands to `ipfsv.test.ipfs.telosfoundation.io`
+
+Example: `--ipfsv-endpoint ipfsv`
+
+### `--golangv-endpoint`
+
+Set the hostname endpoint for the Go language version kickstart information.  By default, this is `golangv` which expands to `golangv.test.ipfs.telosfoundation.io`
+
+Example: `--ipfsv-endpoint ipfsv`
 
 ## Authors
 
