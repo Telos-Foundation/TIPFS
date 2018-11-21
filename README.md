@@ -1,4 +1,4 @@
-# TIPFS -- The Telos IPFS Wrapper
+# TIPFS: The IPFS Wrapper for the Telos Network
 
 The IPFS storage engine wrapper for the Telos blockchain.
 
@@ -9,9 +9,9 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 In order to use the TIPFS stack you need a few things:
- - Public IPv4 address mapped directly to a network interface ( No NAT. No Exceptions! )
- - Linux instance running Ubuntu 18.04
- - Service account without sudo privileges
+* Public IPv4 address mapped directly to a network interface ( No NAT. No Exceptions! )
+* Linux instance running Ubuntu 18.04
+* Service account without sudo privileges
 
 ### Installing
 
@@ -75,7 +75,7 @@ Example: `--log-prefix /srv/ipfs/log`
 Set the port that IPFS daemon uses to communicate with the swarm.  By default, this is 4001
 
 Example: `--ipfs-port 4001`
-
+ipfs
 ### `--ipfs-api-port`
 
 Set the port that IPFS daemon uses as an API endpoint.  By default, this is 5001 on localhost.
@@ -122,15 +122,19 @@ Example: `--ipfsv-endpoint ipfsv`
 
 Set the hostname endpoint for the Go language version kickstart information.  By default, this is `golangv` which expands to `golangv.test.ipfs.telosfoundation.io`
 
-Example: `--ipfsv-endpoint ipfsv`
+Example: `--golangv-endpoint golangv`
+
+## Development
+
+### Basic theory
+
+Todo
 
 ## Authors
 
 * **Stephanie Sunshine** - [StephanieSunshine](https://github.com/StephanieSunshine)
 * **John Hauge** - [JohnHauge](https://github.com/jhexperiment)
 * **Lee Hundley** - [LeeHundley](https://github.com/initpnw)
-
-See also the list of [contributors](https://github.com/Telos-Foundation/tipfs/contributors) who participated in this project.
 
 ## License
 
