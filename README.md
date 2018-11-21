@@ -44,9 +44,40 @@ ipfs swarm peers
 
 Set the install prefix.  By default, the prefix is set to the home folder of the service account.  Make sure the service account has privileges to modify this path.
 
-`Example --prefix /srv/ipfs`
+Example: `--prefix /srv/ipfs`
 
-``
+### `--bin-prefix`
+
+Set the install path for service specific binaries.  By default, the bin-prefix is set to `$HOME/bin`.
+
+Example: `--bin-prefix /srv/ipfs/bin`
+
+### `--log-prefix`
+
+Set the path for log files.  By default, the log-prefix is set to `$HOME/log`.
+
+Example: `--log-prefix /srv/ipfs/log`
+
+### `--go-prefix`
+
+Set the path for Go lang install.  By default, the go-prefix is set to `$HOME/go`.
+
+Example: `--go-prefix /srv/ipfs/go`
+
+### `--tmp-prefix`
+
+Set the path for temp files.  By default, the tmp-prefix is set to `/tmp`.
+
+Example: `--log-prefix /srv/ipfs/log`
+
+### `--ipfs-port`
+
+Set the port that IPFS daemon uses to communicate with the swarm.  By default, this is 4001
+
+Example: `--ipfs-port 4001`
+
+
+
 
 Todo
 
