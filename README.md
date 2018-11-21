@@ -40,7 +40,13 @@ ipfs swarm peers
 
 ## Options
 
-## Deployment
+### `--prefix`
+
+Set the install prefix.  By default, the prefix is set to the home folder of the service account.  Make sure the service account has privileges to modify this path.
+
+`Example --prefix /srv/ipfs`
+
+``
 
 Todo
 
