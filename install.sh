@@ -181,7 +181,7 @@ ipfs bootstrap add $BOOTSTRAP
 cd ~/.ipfs
 printf "$SWARMKEY" > swarm.key
 cd ~
-
+set -x
 ipfs config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$IPFS_PORT\"]"
 ipfs config --json Addresses.API "/ip4/127.0.0.1/tcp/$IPFS_API_PORT"
 ipfs config --json Addresses.Gateway "/ip4/0.0.0.0/tcp/$IPFS_GATEWAY_PORT"
@@ -190,7 +190,7 @@ pkill -9 ipfs
 ipfs daemon --enable-pubsub-experiment &> ipfs.log &
 ipfs pin ls | cut -f1 -d" " | xargs -n 1 ipfs pin rm
 cat ipfs.log
-
+set +x
 echo "Installing Crontab"
 cd $TMP_DIR
 crontab -l > mycron
