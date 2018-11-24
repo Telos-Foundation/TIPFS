@@ -79,8 +79,8 @@ eval set -- "$OPTS"
 
 while true; do
   case "$1" in
-    --dry-run ) DRY_RUN=true; shift; shift ;;
-    --download ) DOWNLOAD=true; shift; shift ;;
+    --dry-run ) DRY_RUN=true; shift ;;
+    --download ) DOWNLOAD=true; shift ;;
 
     --prefix ) DEST_PATH=$2; shift; shift; BIN_PATH=$DEST_PATH/bin; LOG_PATH=$DEST_PATH/log; GO_PATH=$DEST_PATH/go ;;
     --bin-prefix ) BIN_PATH=$2; shift; shift ;;
@@ -125,19 +125,19 @@ IPFS_FILE=`basename $IPFS_URL`
 # TIPFS_FILE=`basename $TIPFS_URL`
 
 # Debug
-if [ "$DRY_RUN" ] ; then
+if $DRY_RUN ; then
   printf "${NC}GO Lang URL:${GREEN} $GO_URL\n"
   printf "${NC}IPFS URL:${GREEN} $IPFS_URL\n"
   printf "${NC}TIPFS URL:${GREEN} $TIPFS_URL\n"
   # Exit if $DOWNLOAD isn't true
-  if ! [ "$DOWNLOAD" ] ; then exit 1; fi
+  if ! $DOWNLOAD ; then exit 1; fi
 fi
 
 printf "${NC}\nDownloading...\n"
 
 # Setup tmp space
 # if this is a dry run and download is on, don't move folders
-if [[ $DRY_RUN && $DOWNLOAD ]] ; then
+if $DRY_RUN && $DOWNLOAD ; then
     echo '--dry-run and --download detected.  Will stop after download'
 else
   TMP_DIR=$(mktemp -d)
@@ -160,7 +160,7 @@ if ! wget $TIPFS_URL ; then
   exit 1
 fi
 
-if [ "$DRY_RUN" ] ; then
+if $DRY_RUN ; then
   exit 1
 fi
 
