@@ -3,5 +3,5 @@ echo -n 'unpin: '
 HASH=$( echo $1 | tr -cd "%[:alnum:]")
 if [[ $(echo -n "$HASH" | wc -c) -ne 46 ]]; then echo "hash failed checksum: "$HASH; exit 0; fi
 
-echo $HASH >> ~/unpin-list
+echo $HASH >> $HOME/log/unpin-list
 ipfs pin rm $HASH
