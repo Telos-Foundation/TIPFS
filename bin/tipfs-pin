@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-
+echo -n 'pin: '
 HASH=$( echo $1 | tr -cd "%[:alnum:]")
-if [[ $(echo -n "$HASH" | wc -c) -ne 46 ]]; then exit 0; fi
+if [[ $(echo -n "$HASH" | wc -c) -ne 46 ]]; then echo "hash failed checksum: "$HASH; exit 0; fi
 
 ipfs pin add $HASH

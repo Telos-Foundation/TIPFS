@@ -45,7 +45,7 @@ DOWNLOAD=false
 DEST_PATH=$HOME
 BIN_PATH=$DEST_PATH/bin
 LOG_PATH=$DEST_PATH/log
-GO_PATH=$DEST_PATH/go
+GO_PATH=$DEST_PATH/golang
 TMP_PATH=/tmp
 
 # In an effort to try and keep everyone in sync on a mass level, we leverage DNS
@@ -108,7 +108,7 @@ IPFSV=$(dig +noall +answer TXT $IPFSV_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 
 
 printf "${NC}TIPFS Install For:${GREEN} ${NETWORK}net\n"
 printf "${NC}DNS Endpoint:${GREEN} $NETWORK.$DNS_ENDPOINT\n"
-printf "${NC}IPFS Bootstrap:${GREEN} $BOOTSTRAP\n"
+printf "${NC}IPFS Bootstrap Nodes:\n${GREEN} $BOOTSTRAP\n"
 printf "${NC}Swarm Key:${GREEN}\n$SWARMKEY\n"
 printf "${NC}Go Lang Version:${GREEN} $GOLANGV\n"
 printf "${NC}IPFS Version:${GREEN} $IPFSV\n"
@@ -165,7 +165,7 @@ if $DRY_RUN ; then
 fi
 
 echo "Installing Go in $GO_PATH from $TMP_DIR"
-mkdir $GO_PATH
+mkdir -p $GO_PATH
 cd $TMP_DIR
 mv $GOLANGV $GO_PATH
 cd $GO_PATH
@@ -175,7 +175,7 @@ mv * ..
 
 echo
 echo "Installing go-ipfs in $BIN_PATH from $TMP_DIR"
-mkdir $BIN_PATH
+mkdir -p $BIN_PATH
 cd $TMP_DIR
 tar zxf go*
 cd go-ipfs
@@ -194,15 +194,15 @@ echo
 echo "Creating log path $LOG_PATH"
 mkdir -p $LOG_PATH
 
-echo "export PATH=\$PATH:$GO_PATH/bin; export GOPATH=$GO_PATH" >> $HOME/.bash_aliases
+echo "export PATH=$BIN_PATH:$GO_PATH/bin:\$PATH" >> $HOME/.bash_aliases
 
-export PATH=$PATH:$GO_PATH/bin:$HOME/bin
+export PATH=$HOME/bin:$GO_PATH/bin:$PATH
 cd $HOME
 
 echo "Initializing IPFS"
 ipfs init
 ipfs bootstrap rm --all
-ipfs bootstrap add $BOOTSTRAP
+echo $BOOTSTRAP | xargs -n 1 ipfs bootstrap add
 cd $HOME/.ipfs
 printf "$SWARMKEY" > swarm.key
 cd $HOME

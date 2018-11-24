@@ -15,7 +15,7 @@ echo "Replica Count:" $replica_count
 for r in $(seq 1 $replica_count)
 do
 	random_number=$(( $RANDOM % ${#ipfs_peers[@]}  ))
-	echo "Asking Node:" ${ipfs_peers[$random_number]} "to pin:" $ipfs_hash 
+	echo "Asking Node:" ${ipfs_peers[$random_number]} "to pin:" $ipfs_hash
 	ipfs pubsub pub ${ipfs_peers[$random_number]} "$ipfs_hash%"
 	unset ipfs_peers[$random_number]
 	ipfs_peers=("${ipfs_peers[@]}")
