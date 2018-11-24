@@ -17,25 +17,25 @@ In order to use the TIPFS stack you need a few things:
 
 Create service account
 
-```
+```bash
 groupadd ipfs && useradd -d /home/ipfs -g ipfs -m -s /bin/bash ipfs
 ```
 
 Enter service account
 
-```
+```bash
 sudo su -l ipfs
 ```
 
 Verify settings
 
-```
+```bash
 curl "https://raw.githubusercontent.com/Telos-Foundation/tipfs/master/install.sh" | bash /dev/stdin --dry-run
 ```
 
 Bootstrap node
 
-```
+```bash
 curl "https://raw.githubusercontent.com/Telos-Foundation/tipfs/master/install.sh" | bash
 ```
 
@@ -47,16 +47,36 @@ ipfs daemon --enable-pubsub-experiment &>> ~/log/ipfs &
 ```
 
 Start TIPFS
+
 ```
 tipfs-watcher-cycle
 ```
 
 When this is finished, you should have a running IPFS node connected to our swarm.  You can verify by issuing
+
 ```
 ipfs swarm peers
 ```
 
+## Using
 
+Add to TIPFS
+
+```
+tipfs-add < file-to-add
+```
+
+Mark for garbage Can
+
+```
+tipfs-del
+```
+
+Query TIPFS
+
+```
+tipfs-get
+```
 
 ## Options
 
