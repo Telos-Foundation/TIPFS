@@ -137,7 +137,7 @@ printf "${NC}\nDownloading...\n"
 
 # Setup tmp space
 # if this is a dry run and download is on, don't move folders
-if [ "$DRY_RUN" && "$DOWNLOAD" ] ; then
+if [[ $DRY_RUN && $DOWNLOAD ]] ; then
     echo '--dry-run and --download detected.  Will stop after download'
 else
   TMP_DIR=$(mktemp -d)
