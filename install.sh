@@ -68,11 +68,7 @@ IPFSV_ENDPOINT=ipfsv
 
 # Needed for OSX to play right.
 
-<<<<<<< HEAD
 OPTS=`/usr/bin/env getopt -o '' --long dry-run,prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint: -n 'install' -- "$@"`
-=======
-OPTS=`/usr/bin/env getopt -o '' --long prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint:,golangv-endpoint: -n 'install' -- "$@"`
->>>>>>> 449727a72175c473ee131f2204313085f4c9ca53
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
 eval set -- "$OPTS"
