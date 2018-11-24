@@ -36,6 +36,8 @@ DumpVars() {
 }
 
 # Default install paths
+DRY_RUN=false
+
 DEST_PATH=$HOME
 BIN_PATH=$DEST_PATH/bin
 LOG_PATH=$DEST_PATH/log
@@ -66,13 +68,15 @@ IPFSV_ENDPOINT=ipfsv
 
 # Needed for OSX to play right.
 
-OPTS=`/usr/bin/env getopt -o '' --long prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint: -n 'install' -- "$@"`
+OPTS=`/usr/bin/env getopt -o '' --long dry-run,prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint: -n 'install' -- "$@"`
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
 eval set -- "$OPTS"
 
 while true; do
   case "$1" in
+    --dry-run ) DRY_RUN=true; shift; shift ;;
+
     --prefix ) DEST_PATH=$2; shift; shift; BIN_PATH=$DEST_PATH/bin; LOG_PATH=$DEST_PATH/log; GO_PATH=$DEST_PATH/go ;;
     --bin-prefix ) BIN_PATH=$2; shift; shift ;;
     --log-prefix ) LOG_PATH=$2; shift; shift ;;
@@ -102,7 +106,7 @@ printf "${NC}IPFS Bootstrap:${GREEN} $BOOTSTRAP\n"
 printf "${NC}Swarm Key:${GREEN}\n$SWARMKEY\n"
 printf "${NC}Go Lang Version:${GREEN} $GOLANGV\n"
 printf "${NC}IPFS Version:${GREEN} $IPFSV\n"
-printf "${NC}\nDownloading...\n"
+
 
 #TIPFSV=$(dig +noall +answer TXT $TIPFSV_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 | tr -d \" | base64 -d )
 
@@ -115,9 +119,14 @@ IPFS_FILE=`basename $IPFS_URL`
 # TIPFS_FILE=`basename $TIPFS_URL`
 
 # Debug
-if [ "$DEBUGME" ] ; then
-  DumpVars
+if [ "$DRY_RUN" ] ; then
+  printf "${NC}GO Lang URL:${GREEN} $GO_URL\n"
+  printf "${NC}IPFS URL:${GREEN} $IPFS_URL\n"
+  printf "${NC}TIPFS URL:${GREEN} $TIPFS_URL\n"
+  exit 1
 fi
+
+printf "${NC}\nDownloading...\n"
 
 # Setup tmp space
 TMP_DIR=$(mktemp -d)
@@ -205,4 +214,3 @@ cd bin
 ./tipfs-watcher-cycle
 
 rm -rf $TMP_DIR
-
