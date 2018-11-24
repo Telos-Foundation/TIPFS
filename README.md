@@ -27,6 +27,12 @@ Enter service account
 sudo su -l ipfs
 ```
 
+Verify settings
+
+```
+curl "https://raw.githubusercontent.com/Telos-Foundation/tipfs/master/install.sh" | bash /dev/stdin --dry-run
+```
+
 Bootstrap node
 
 ```

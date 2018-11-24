@@ -36,7 +36,11 @@ DumpVars() {
 }
 
 # Default install paths
+
+# Dry run to just get info, with the optional download flag to download the
+# install files locally
 DRY_RUN=false
+DOWNLOAD=false
 
 DEST_PATH=$HOME
 BIN_PATH=$DEST_PATH/bin
@@ -68,7 +72,7 @@ IPFSV_ENDPOINT=ipfsv
 
 # Needed for OSX to play right.
 
-OPTS=`/usr/bin/env getopt -o '' --long dry-run,prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint: -n 'install' -- "$@"`
+OPTS=`/usr/bin/env getopt -o '' --long dry-run,download,prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint: -n 'install' -- "$@"`
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
 eval set -- "$OPTS"
@@ -76,6 +80,7 @@ eval set -- "$OPTS"
 while true; do
   case "$1" in
     --dry-run ) DRY_RUN=true; shift; shift ;;
+    --download ) DOWNLOAD=true; shift; shift ;;
 
     --prefix ) DEST_PATH=$2; shift; shift; BIN_PATH=$DEST_PATH/bin; LOG_PATH=$DEST_PATH/log; GO_PATH=$DEST_PATH/go ;;
     --bin-prefix ) BIN_PATH=$2; shift; shift ;;
@@ -124,14 +129,22 @@ if [ "$DRY_RUN" ] ; then
   printf "${NC}GO Lang URL:${GREEN} $GO_URL\n"
   printf "${NC}IPFS URL:${GREEN} $IPFS_URL\n"
   printf "${NC}TIPFS URL:${GREEN} $TIPFS_URL\n"
-  exit 1
+  # Exit if $DOWNLOAD isn't true
+  ! [ "$DOWNLOAD" ] && exit 1
 fi
 
 printf "${NC}\nDownloading...\n"
 
 # Setup tmp space
-TMP_DIR=$(mktemp -d)
-cd $TMP_DIR
+# if this is a dry run and download is on, don't move folders
+if [ "$DRY_RUN" && "$DOWNLOAD" ] ; then
+    echo '--dry-run and --download detected.  Will stop after download'
+else
+  TMP_DIR=$(mktemp -d)
+  cd $TMP_DIR
+fi
+
+echo "Saving files to:" `pwd`
 
 # Download
 if ! wget $GO_URL ; then
@@ -147,8 +160,10 @@ if ! wget $TIPFS_URL ; then
   exit 1
 fi
 
-# Extract
-echo
+if [ "$DRY_RUN" ] ; then
+  exit 1
+fi
+
 echo "Installing Go in $GO_PATH from $TMP_DIR"
 mkdir $GO_PATH
 cd $TMP_DIR
