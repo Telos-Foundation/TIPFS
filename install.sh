@@ -68,7 +68,11 @@ IPFSV_ENDPOINT=ipfsv
 
 # Needed for OSX to play right.
 
+<<<<<<< HEAD
 OPTS=`/usr/bin/env getopt -o '' --long dry-run,prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint: -n 'install' -- "$@"`
+=======
+OPTS=`/usr/bin/env getopt -o '' --long prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint:,golangv-endpoint: -n 'install' -- "$@"`
+>>>>>>> 449727a72175c473ee131f2204313085f4c9ca53
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
 eval set -- "$OPTS"
@@ -91,6 +95,7 @@ while true; do
     --bootstrap-endpoint ) BOOTSTRAP_ENDPOINT=$2; shift; shift ;;
     --swarmkey-endpoint ) SWARMKEY_ENDPOINT=$2; shift; shift ;;
     --ipfsv-endpoint ) IPFSV_ENDPOINT=$2; shift; shift ;;
+    --golangv-endpoint ) GOLANGV_ENDPOINT=$2; shift; shift ;;
     * ) break ;;
   esac
 done
@@ -201,16 +206,16 @@ ipfs repo fsck
 ipfs daemon --enable-pubsub-experiment &> ipfs.log &
 ipfs pin ls | cut -f1 -d" " | xargs -n 1 ipfs pin rm
 cat ipfs.log
-set +x
-echo "Installing Crontab"
-cd $TMP_DIR
-crontab -l > mycron
-echo "@reboot $HOME/bin/tipfs-watcher-cycle" >> mycron
-crontab mycron
+#set +x
+#echo "Installing Crontab"
+#cd $TMP_DIR
+#crontab -l > mycron
+#echo "@reboot $HOME/bin/tipfs-watcher-cycle" >> mycron
+#crontab mycron
 
-echo "Starting TIPFS Watchers"
-cd $HOME
-cd bin
-./tipfs-watcher-cycle
+#echo "Starting TIPFS Watchers"
+#cd $HOME
+#cd bin
+#./tipfs-watcher-cycle
 
 rm -rf $TMP_DIR
