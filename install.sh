@@ -130,7 +130,7 @@ if [ "$DRY_RUN" ] ; then
   printf "${NC}IPFS URL:${GREEN} $IPFS_URL\n"
   printf "${NC}TIPFS URL:${GREEN} $TIPFS_URL\n"
   # Exit if $DOWNLOAD isn't true
-  ! [ "$DOWNLOAD" ] && exit 1
+  if ! [ "$DOWNLOAD" ] ; then exit 1; fi
 fi
 
 printf "${NC}\nDownloading...\n"
