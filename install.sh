@@ -211,6 +211,10 @@ ipfs config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$IPFS_PORT\"]"
 ipfs config --json Addresses.API "\"/ip4/127.0.0.1/tcp/$IPFS_API_PORT\""
 ipfs config --json Addresses.Gateway "\"/ip4/0.0.0.0/tcp/$IPFS_GATEWAY_PORT\""
 
+rm -rf $TMP_DIR
+
+exit 1
+# forget all this for now
 pkill -9 ipfs
 
 ipfs repo fsck
@@ -228,5 +232,3 @@ cat ipfs.log
 #cd $HOME
 #cd bin
 #./tipfs-watcher-cycle
-
-rm -rf $TMP_DIR
