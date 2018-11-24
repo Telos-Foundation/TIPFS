@@ -41,20 +41,21 @@ curl "https://raw.githubusercontent.com/Telos-Foundation/tipfs/master/install.sh
 
 Start IPFS
 
-```
+```bash
+cd ~
 source ~/.bash_aliases
 ipfs daemon --enable-pubsub-experiment &>> ~/log/ipfs &
 ```
 
 Start TIPFS
 
-```
+```bash
 tipfs-watcher-cycle
 ```
 
 When this is finished, you should have a running IPFS node connected to our swarm.  You can verify by issuing
 
-```
+```bash
 ipfs swarm peers
 ```
 
@@ -62,20 +63,20 @@ ipfs swarm peers
 
 Add to TIPFS
 
-```
+```bash
 tipfs-add < file-to-add
-```
-
-Mark for garbage Can
-
-```
-tipfs-del
 ```
 
 Query TIPFS
 
+```bash
+tipfs-get QmUaY83dt9dU94U845BUPWwHeacKVNT86KfYwtEbRhf5AR
 ```
-tipfs-get
+
+Mark for deletion
+
+```bash
+tipfs-del QmUaY83dt9dU94U845BUPWwHeacKVNT86KfYwtEbRhf5AR
 ```
 
 ## Options
