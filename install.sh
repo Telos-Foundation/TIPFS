@@ -108,7 +108,7 @@ IPFSV=$(dig +noall +answer TXT $IPFSV_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 
 
 printf "${NC}TIPFS Install For:${GREEN} ${NETWORK}net\n"
 printf "${NC}DNS Endpoint:${GREEN} $NETWORK.$DNS_ENDPOINT\n"
-printf "${NC}IPFS Bootstrap Nodes:\n${GREEN} $BOOTSTRAP\n"
+printf "${NC}IPFS Bootstrap Nodes:\n${GREEN}$BOOTSTRAP\n"
 printf "${NC}Swarm Key:${GREEN}\n$SWARMKEY\n"
 printf "${NC}Go Lang Version:${GREEN} $GOLANGV\n"
 printf "${NC}IPFS Version:${GREEN} $IPFSV\n"

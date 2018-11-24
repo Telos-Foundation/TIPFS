@@ -39,10 +39,24 @@ Bootstrap node
 curl "https://raw.githubusercontent.com/Telos-Foundation/tipfs/master/install.sh" | bash
 ```
 
+Start IPFS
+
+```
+source ~/.bash_aliases
+ipfs daemon --enable-pubsub-experiment &>> ~/log/ipfs &
+```
+
+Start TIPFS
+```
+tipfs-watcher-cycle
+```
+
 When this is finished, you should have a running IPFS node connected to our swarm.  You can verify by issuing
 ```
 ipfs swarm peers
 ```
+
+
 
 ## Options
 
