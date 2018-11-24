@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PREFIX=/opt/tipfs
+PREFIX=$HOME
 
 temp_file=`mktemp`
 ipfs add > $temp_file
