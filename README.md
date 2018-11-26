@@ -12,6 +12,8 @@ In order to use the TIPFS stack you need a few things:
 * Public IPv4 address mapped directly to a network interface ( No NAT. No Exceptions! )
 * Linux instance running Ubuntu 18.04
 * Service account without sudo privileges
+* at least 100gb per development instance
+* at least 2tb per mainnet instance
 
 ### Installing
 
