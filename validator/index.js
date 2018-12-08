@@ -94,7 +94,7 @@ function serverCb(req, res) {
 
   function genHash() {
 
-    if ( scope === 'blatherskite') {
+    if ( scope === 'legacy') {
       return; // skip generating hash
     }
 
@@ -119,7 +119,7 @@ function serverCb(req, res) {
 
   function getOnChainTable() {
 
-    if ( scope === 'blatherskite') {
+    if ( scope === 'legacy') {
       return; // skip querying on-chain table
     }
 
@@ -149,7 +149,7 @@ function serverCb(req, res) {
 
   function validateNewHash() {
 
-    if ( scope === 'blatherskite') {
+    if ( scope === 'legacy') {
       return; // skip hash validation
     }
 
