@@ -124,7 +124,7 @@ printf "${NC}Swarm Key:${GREEN}\n$SWARMKEY\n"
 printf "${NC}Go Lang Version:${GREEN} $GOLANGV\n"
 printf "${NC}IPFS Version:${GREEN} $IPFSV\n"
 printf "${NC}Nginx Version:${GREEN} $NGINXV\n"
-printf "${NC}Naxsiv Version:${GREEN} $NAXSIV\n"
+printf "${NC}Naxsi Version:${GREEN} $NAXSIV\n"
 
 
 #TIPFSV=$(dig +noall +answer TXT $TIPFSV_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 | tr -d \" | base64 -d )
@@ -145,6 +145,9 @@ if $DRY_RUN ; then
   printf "${NC}GO Lang URL:${GREEN} $GO_URL\n"
   printf "${NC}IPFS URL:${GREEN} $IPFS_URL\n"
   printf "${NC}TIPFS URL:${GREEN} $TIPFS_URL\n"
+  printf "${NC}NGINX URL:${GREEN} $NGINX_URL\n"
+  printf "${NC}NAXSI URL:${GREEN} $NAXSI_URL\n"
+
   # Exit if $DOWNLOAD isn't true
   if ! $DOWNLOAD ; then exit 1; fi
 fi
@@ -175,13 +178,21 @@ if ! wget $TIPFS_URL ; then
   echo "Cannot download TIPFS"
   exit 1
 fi
-
+if ! wget $NGINX_URL ; then
+  echo "Cannot download Nginx"
+  exit 1
+fi
+if ! wget $NAXSI_URL -O naxsi-$NAXSI_URL ; then
+  echo "Cannot download Naxsi"
+  exit 1
+fi
 if $DRY_RUN ; then
   exit 1
 fi
 
 echo "Installing Go in $GO_PATH from $TMP_DIR"
 mkdir -p $GO_PATH
+
 cd $TMP_DIR
 mv $GOLANGV $GO_PATH
 cd $GO_PATH
@@ -216,6 +227,10 @@ echo "export LIBP2P_FORCE_PNET=1" >> $HOME/.bash_aliases
 
 export PATH=$HOME/bin:$GO_PATH/bin:$PATH
 
+cd $TMP_DIR
+
+
+
 cd $HOME
 
 echo "Initializing IPFS"
@@ -229,6 +244,18 @@ set -x
 ipfs config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$IPFS_PORT\"]"
 ipfs config --json Addresses.API "\"/ip4/127.0.0.1/tcp/$IPFS_API_PORT\""
 ipfs config --json Addresses.Gateway "\"/ip4/127.0.0.1/tcp/$IPFS_GATEWAY_PORT\""
+
+
+
+
+
+
+
+
+
+
+
+
 
 rm -rf $TMP_DIR
 
