@@ -43,6 +43,7 @@ DRY_RUN=false
 DOWNLOAD=false
 
 DEST_PATH=$HOME
+NGINX_PATH=$DEST_PATH/nginx
 BIN_PATH=$DEST_PATH/bin
 LOG_PATH=$DEST_PATH/log
 GO_PATH=$DEST_PATH/golang
@@ -54,13 +55,17 @@ TMP_PATH=/tmp
 IPFS_PORT=4001
 # IPFS API port
 IPFS_API_PORT=5001
+# IPFS API Loopback
+IPFS_API_LOOPBACK=6001
+# TIPFS Add HTTP Shim
+TIPFS_ADD_SHIM=7001
 # IPFS Gateway port
 IPFS_GATEWAY_PORT=8080
 
 # Network boot DNS root
 DNS_ENDPOINT=ipfs.telosfoundation.io
 # Network shortname [ main | test | stage | jungle | etc ]
-NETWORK=test
+NETWORK=stage
 # boot.$NETWORK.$DNS_ENDPOINT
 BOOTSTRAP_ENDPOINT=boot
 # key.$NETWORK.$DNS_ENDPOINT
@@ -69,14 +74,18 @@ SWARMKEY_ENDPOINT=key
 GOLANGV_ENDPOINT=golangv
 # ipfsv.$NETWORK.$DNS_ENDPOINT
 IPFSV_ENDPOINT=ipfsv
+# nginxv.$NETWORK.$DNS_ENDPOINT
+NGINXV_ENDPOINT=nginxv
+# nasxi.$NETWORK.$DNS_ENDPOINT
+NAXSIV_ENDPOINT=naxsiv
 
-# Needed for OSX to play right.
 
 OPTS=`/usr/bin/env getopt -o '' --long dry-run,download,prefix:,bin-prefix:,log-prefix:,go-prefix:,tmp-prefix:,ipfs-port:,ipfs-api-port:,ipfs-gateway-port:,dns-endpoint:,network:,bootstrap-endpoint:,swarmkey-endpoint:,ipfsv-endpoint: -n 'install' -- "$@"`
 if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
 
 eval set -- "$OPTS"
 
+# TODO: --nginxv-endpoint --nasxi-endpoint
 while true; do
   case "$1" in
     --dry-run ) DRY_RUN=true; shift ;;
@@ -105,6 +114,8 @@ BOOTSTRAP=$(dig +noall +answer TXT $BOOTSTRAP_ENDPOINT.$NETWORK.$DNS_ENDPOINT | 
 SWARMKEY=$(dig +noall +answer TXT $SWARMKEY_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 -d \" | base64 -d )
 GOLANGV=$(dig +noall +answer TXT $GOLANGV_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 -d \" | base64 -d )
 IPFSV=$(dig +noall +answer TXT $IPFSV_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 -d \" | base64 -d )
+NGINXV=$(dig +noall +answer TXT $NGINXV_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 -d \" | base64 -d )
+NAXSIV=$(dig +noall +answer TXT $NAXSIV_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 -d \" | base64 -d )
 
 printf "${NC}TIPFS Install For:${GREEN} ${NETWORK}net\n"
 printf "${NC}DNS Endpoint:${GREEN} $NETWORK.$DNS_ENDPOINT\n"
@@ -112,12 +123,17 @@ printf "${NC}IPFS Bootstrap Nodes:\n${GREEN}$BOOTSTRAP\n"
 printf "${NC}Swarm Key:${GREEN}\n$SWARMKEY\n"
 printf "${NC}Go Lang Version:${GREEN} $GOLANGV\n"
 printf "${NC}IPFS Version:${GREEN} $IPFSV\n"
+printf "${NC}Nginx Version:${GREEN} $NGINXV\n"
+printf "${NC}Naxsiv Version:${GREEN} $NAXSIV\n"
 
 
 #TIPFSV=$(dig +noall +answer TXT $TIPFSV_ENDPOINT.$NETWORK.$DNS_ENDPOINT | cut -f2 | tr -d \" | base64 -d )
 
 GO_URL="https://dl.google.com/go/$GOLANGV"
 IPFS_URL="https://dist.ipfs.io/go-ipfs/$IPFSV"
+NGINX_URL="https://nginx.org/download/$NGINXV"
+NAXSI_URL="https://github.com/nbs-system/naxsi/archive/$NAXSIV"
+
 TIPFS_URL="https://github.com/Telos-Foundation/tipfs/archive/master.tar.gz"
 
 GO_FILE=`basename $GO_URL`
@@ -194,9 +210,12 @@ echo
 echo "Creating log path $LOG_PATH"
 mkdir -p $LOG_PATH
 
+echo "export GOPATH=$HOME/.go" >> $HOME/.bash_aliases
 echo "export PATH=$BIN_PATH:$GO_PATH/bin:\$PATH" >> $HOME/.bash_aliases
+echo "export LIBP2P_FORCE_PNET=1" >> $HOME/.bash_aliases
 
 export PATH=$HOME/bin:$GO_PATH/bin:$PATH
+
 cd $HOME
 
 echo "Initializing IPFS"
@@ -209,7 +228,7 @@ cd $HOME
 set -x
 ipfs config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$IPFS_PORT\"]"
 ipfs config --json Addresses.API "\"/ip4/127.0.0.1/tcp/$IPFS_API_PORT\""
-ipfs config --json Addresses.Gateway "\"/ip4/0.0.0.0/tcp/$IPFS_GATEWAY_PORT\""
+ipfs config --json Addresses.Gateway "\"/ip4/127.0.0.1/tcp/$IPFS_GATEWAY_PORT\""
 
 rm -rf $TMP_DIR
 

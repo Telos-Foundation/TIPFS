@@ -17,10 +17,12 @@ In order to use the TIPFS stack you need a few things:
 
 ### Installing
 
-Create service account
+Create service account (from root)
 
 ```bash
 groupadd ipfs && useradd -d /home/ipfs -g ipfs -m -s /bin/bash ipfs
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+sudo apt install -y nodejs build-essential libpcre3-dev libssl-dev zlib1g-dev
 ```
 
 Enter service account
