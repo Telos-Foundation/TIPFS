@@ -20,7 +20,7 @@ In order to use the TIPFS stack you need a few things:
 Create service account (from root)
 
 ```bash
-groupadd ipfs && useradd -d /home/ipfs -g ipfs,sudo -m -s /bin/bash ipfs
+groupadd ipfs && useradd -d /srv/ipfs -g ipfs -G sudo -m -s /bin/bash ipfs
 curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 sudo apt install -y nodejs build-essential libpcre3-dev libssl-dev zlib1g-dev
 ```
