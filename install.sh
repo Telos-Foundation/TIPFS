@@ -254,6 +254,11 @@ cd $(echo $NGINXV | sed -e 's/\.tar\.gz$//')
 make
 make install
 
+cd $HOME/.nginx
+wget https://raw.githubusercontent.com/Telos-Foundation/tipfs/master/conf/ipfs.rules -O nginx.conf
+wget https://raw.githubusercontent.com/Telos-Foundation/tipfs/master/conf/ipfs.rules -O ipfs.rules
+
+
 cd $HOME
 
 echo "Initializing IPFS"
