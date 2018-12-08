@@ -43,7 +43,7 @@ DRY_RUN=false
 DOWNLOAD=false
 
 DEST_PATH=$HOME
-NGINX_PATH=$DEST_PATH/nginx
+
 BIN_PATH=$DEST_PATH/bin
 LOG_PATH=$DEST_PATH/log
 GO_PATH=$DEST_PATH/golang
@@ -227,9 +227,32 @@ echo "export LIBP2P_FORCE_PNET=1" >> $HOME/.bash_aliases
 
 export PATH=$HOME/bin:$GO_PATH/bin:$PATH
 
+echo
+echo "Installing Nginx with Naxsi"
 cd $TMP_DIR
+tar zxf $NGINXV
+tar zxf naxsi-$NAXSIV
+cd $(echo $NGINXV | sed -e 's/\.tar\.gz$//')
 
-
+./configure --with-compat --add-dynamic-module=../$(echo naxsi-$NAXSIV | sed -e 's/\.tar\.gz$//')/naxsi_src/ \
+                          --sbin-path=$BIN_PATH/nginx \
+                          --http-client-body-temp-path=$HOME/tmp/nginx/body \
+                          --http-fastcgi-temp-path=$HOME/tmp/nginx/fastcgi \
+                          --http-proxy-temp-path=$HOME/tmp/nginx/proxy \
+                          --conf-path=$HOME/.nginx/nginx.conf \
+                          --http-log-path=$LOG_PATH/nginx-access.log \
+                          --error-log-path=$LOG_PATH/nginx-error.log \
+                          --lock-path=$LOG_PATH/nginx.lock \
+                          --pid-path=$LOG_PATH/nginx.pid \
+                          --prefix=$HOME/nginx \
+                          --with-threads \
+                          --without-mail_pop3_module \
+                          --without-mail_smtp_module \
+                          --without-mail_imap_module \
+                          --without-http_uwsgi_module \
+                          --without-http_scgi_module
+make
+make install
 
 cd $HOME
 
@@ -246,20 +269,13 @@ ipfs config --json Addresses.API "\"/ip4/127.0.0.1/tcp/$IPFS_API_PORT\""
 ipfs config --json Addresses.Gateway "\"/ip4/127.0.0.1/tcp/$IPFS_GATEWAY_PORT\""
 
 
-
-
-
-
-
-
-
-
-
-
-
 rm -rf $TMP_DIR
 
 exit 1
+
+
+
+
 # forget all this for now
 pkill -9 ipfs
 
