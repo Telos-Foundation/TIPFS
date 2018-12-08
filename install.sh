@@ -270,9 +270,8 @@ printf "$SWARMKEY" > swarm.key
 cd $HOME
 set -x
 ipfs config --json Addresses.Swarm "[\"/ip4/0.0.0.0/tcp/$IPFS_PORT\"]"
-ipfs config --json Addresses.API "\"/ip4/127.0.0.1/tcp/$IPFS_API_PORT\""
+ipfs config --json Addresses.API "\"/ip4/127.0.0.1/tcp/$IPFS_API_LOOPBACK\""
 ipfs config --json Addresses.Gateway "\"/ip4/127.0.0.1/tcp/$IPFS_GATEWAY_PORT\""
-
 
 rm -rf $TMP_DIR
 

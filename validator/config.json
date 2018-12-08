@@ -1,0 +1,19 @@
+{
+  "server": {
+    "port": 7001
+  },
+  "ipfs": {
+    "address": "localhost",
+    "port": 6001,
+    "protocol": "http"
+  },
+  "nodeos": {
+    "address": "stage.api.telosvoyager.io",
+    "port": 2888,
+    "protocol": "http"
+  },
+  "ipfs.pay": {
+    "code": "ipfspay11111",
+    "table": "storage"
+  }
+}
