@@ -182,7 +182,7 @@ if ! wget $NGINX_URL ; then
   echo "Cannot download Nginx"
   exit 1
 fi
-if ! wget $NAXSI_URL -O naxsi-$NAXSI_URL ; then
+if ! $(wget $NAXSI_URL -O naxsi-$NAXSIV) ; then
   echo "Cannot download Naxsi"
   exit 1
 fi
