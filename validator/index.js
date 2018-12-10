@@ -72,6 +72,10 @@ function serverCb(req, res) {
       // //  parseFormDeferred.reject(new Error('Missing scope.'));
       // }
 
+      if ( files.null ) {
+        files.file = files.null;
+      }
+
       if ( ! (files && files.file && files.file[0] && files.file[0].path) ) {
         parseFormDeferred.reject(new Error('Missing file.'));
       }
@@ -308,8 +312,8 @@ function serverCb(req, res) {
 
     respond({
       httpStatusCode: 501,
-      httpHeaders:  {'Content-type':'text/plain'},
-      message: 'Invalid request.'
+      httpHeaders:  {'Content-type':'application/json'},
+      message: JSON.stringify(error)
     });
     return null;
 
