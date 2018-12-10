@@ -261,9 +261,11 @@ cp conf/nginx.conf $HOME/.nginx
 cp conf/ipfs.rules $HOME/.nginx
 
 cp -r validator $HOME
+cd $HOME
+cd validator
+npm install
 
 cd $HOME
-
 echo "Initializing IPFS"
 ipfs init
 ipfs bootstrap rm --all
