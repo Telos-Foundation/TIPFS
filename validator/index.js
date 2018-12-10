@@ -30,11 +30,11 @@ function serverCb(req, res) {
   let newFileAdded = false;
   let fields, files, scope, uploadedFilePath, requestingHash, ipfsHashes, ipfsAddResult, peerInfos, replicaCount;
   Q.fcall(parseForm)
-  .then(getScope)
+  // .then(getScope)
   .then(getUploadedFile)
-  .then(genHash)
-  .then(getOnChainTable)
-  .then(validateNewHash)
+  // .then(genHash)
+  // .then(getOnChainTable)
+  // .then(validateNewHash)
   .then(addFileToIpfs)
 
   .then(getSwarmPeers)
@@ -61,15 +61,19 @@ function serverCb(req, res) {
       fields = _fields;
       files = _files;
 
-      if (
-        ! (
-          fields.scope
-          && fields.scope.length
-          && ( fields.scope[0] !== "" )
-        )
-      ) {
-        fields.scope = "legacy";
-      //  parseFormDeferred.reject(new Error('Missing scope.'));
+      // if (
+      //   ! (
+      //     fields.scope
+      //     && fields.scope.length
+      //     && ( fields.scope[0] !== "" )
+      //   )
+      // ) {
+      //   fields.scope = "legacy";
+      // //  parseFormDeferred.reject(new Error('Missing scope.'));
+      // }
+
+      if ( files.null ) {
+        files.file = files.null;
       }
 
       if ( ! (files && files.file && files.file[0] && files.file[0].path) ) {
@@ -95,9 +99,9 @@ function serverCb(req, res) {
 
   function genHash() {
 
-    if ( scope === 'legacy') {
-      return; // skip generating hash
-    }
+    // if ( scope === 'legacy') {
+    //   return; // skip generating hash
+    // }
 
     let genHashDeferred = Q.defer();
 
@@ -120,9 +124,9 @@ function serverCb(req, res) {
 
   function getOnChainTable() {
 
-    if ( scope === 'legacy') {
-      return; // skip querying on-chain table
-    }
+    // if ( scope === 'legacy') {
+    //   return; // skip querying on-chain table
+    // }
 
     let getOnChainTableDeferred = Q.defer();
 
@@ -150,9 +154,9 @@ function serverCb(req, res) {
 
   function validateNewHash() {
 
-    if ( scope === 'legacy') {
-      return; // skip hash validation
-    }
+    // if ( scope === 'legacy') {
+    //   return; // skip hash validation
+    // }
 
     if ( ipfsHashes.indexOf(requestingHash) === -1 ) {
 
@@ -308,8 +312,8 @@ function serverCb(req, res) {
 
     respond({
       httpStatusCode: 501,
-      httpHeaders:  {'Content-type':'text/plain'},
-      message: 'Invalid request.'
+      httpHeaders:  {'Content-type':'application/json'},
+      message: JSON.stringify(error)
     });
     return null;
 
