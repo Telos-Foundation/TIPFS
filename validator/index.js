@@ -68,7 +68,8 @@ function serverCb(req, res) {
           && ( fields.scope[0] !== "" )
         )
       ) {
-        parseFormDeferred.reject(new Error('Missing scope.'));
+        fields.scope = "legacy";
+      //  parseFormDeferred.reject(new Error('Missing scope.'));
       }
 
       if ( ! (files && files.file && files.file[0] && files.file[0].path) ) {
