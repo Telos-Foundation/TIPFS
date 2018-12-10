@@ -259,6 +259,7 @@ git clone https://github.com/Telos-Foundation/tipfs.git
 cd tipfs
 cp conf/nginx.conf $HOME/.nginx
 cp conf/ipfs.rules $HOME/.nginx
+cp conf/naxsi_core.rules $HOME/.nginx
 
 cp -r validator $HOME
 cd $HOME
