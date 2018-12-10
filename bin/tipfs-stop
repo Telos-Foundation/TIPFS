@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+pkill -fu `whoami` ipfs
+pkill -fu `whoami` node
+pkill -fu `whoami` nginx
