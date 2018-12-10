@@ -1,1 +1,7 @@
 #!/usr/bin/env bash
+
+cd $HOME
+bin/ipfs daemon --enable-pubsub-experiment &>> $HOME/log/ipfs &
+cd validator && node index.js &>> $HOME/log/validator & cd $HOME
+bin/tipfs-watcher-cycle
+bin/nginx

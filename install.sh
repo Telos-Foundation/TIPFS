@@ -260,6 +260,8 @@ cd tipfs
 cp conf/nginx.conf $HOME/.nginx
 cp conf/ipfs.rules $HOME/.nginx
 cp conf/naxsi_core.rules $HOME/.nginx
+mkdir -p $HOME/tmp/nginx/body
+
 
 cp -r validator $HOME
 cd $HOME
